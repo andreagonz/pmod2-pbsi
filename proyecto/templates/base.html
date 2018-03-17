@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html lang="es-MX">
+  <head>
+    <title>{% block title %}{% endblock %}</title>
+    {% load staticfiles %}
+  </head>
+  <body>
+    <a href="{% url 'editar-datos' %}">Editar datos</a>
+    <a href="{% url 'usuarios' %}">Administrar usuarios</a>
+    {% block contenido %}
+    {% endblock %}
+
+    {% block scripts %}
+    {% endblock %}
+  </body>
+</html>

@@ -1,0 +1,15 @@
+{% extends 'base.html' %}
+
+{% block title %}Registro{% endblock %}
+
+{% block head %}
+  {% load staticfiles %}
+{% endblock %}
+
+{% block contenido %}
+<form action="" method="post">
+  {% csrf_token %}
+  {% include 'form.html' with form=form %}
+  <input type="submit" value="Crear usuario" />
+</form>
+{% endblock %}

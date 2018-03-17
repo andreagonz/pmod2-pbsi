@@ -1,0 +1,33 @@
+{% extends "base_sesion.html" %}
+
+{% block title %}Monitoreo Web - Inicio de Sesión{% endblock %}
+
+{% block contenido %}
+  {% if form.errors %}
+    <p class="error">Usuario y/o contraseña incorrectos.</p>
+  {% endif %}
+  
+  {% if next %}
+    <p>Inicia sesión.</p>
+  {% endif %}
+  
+  <form method="post" action="{% url 'login' %}">
+    {% csrf_token %}
+    <div>
+      <td>{{ form.username.label_tag }}</td>
+      <td>{{ form.username }}</td>
+    </div>
+    <div>
+      <td>{{ form.password.label_tag }}</td>
+      <td>{{ form.password }}</td>
+    </div>
+
+    <div>
+      <input type="submit" value="Iniciar Sesión" />
+      <input type="hidden" name="next" value="{{ next }}" />
+    </div>
+  </form> 
+  <p>
+    <!--a href="% url 'password_reset' %">¿Olvidaste tu contraseña?</a-->
+  </p>
+{% endblock %}
