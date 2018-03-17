@@ -1,3 +1,4 @@
 notas
 db.sqlite3
 activate.bck
+__pycache__/
