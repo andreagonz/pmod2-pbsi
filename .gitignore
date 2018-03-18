@@ -2,3 +2,4 @@ notas
 db.sqlite3
 activate.bck
 __pycache__/
+env/
