@@ -1,0 +1,17 @@
+.logo {
+    height : 60px;
+    margin : 10px;
+    min-width : 40px;
+}
+
+.uk-offcanvas-bar {
+    background : #135687;
+}
+
+.logo-inicio {
+    max-height : 200px;
+}
+
+.campos-inicio {
+    display : block;
+}

@@ -1,0 +1,52 @@
+{% extends 'base.html' %}
+
+{% block title %}Administración de Secciones{% endblock %}
+
+{% block contenido %}
+
+  <div class="uk-container uk-container-small">
+
+    <h1 class="uk-heading-divider">Secciones personalizadas</h1>
+    
+    {% if messages %}
+      <ul class="messages">
+        {% for message in messages %}
+          <div class="uk-alert-success" uk-alert>
+            <a class="uk-alert-close" uk-close></a>
+            <p>{{ message }}</p>
+          </div>
+        {% endfor %}
+      </ul>
+    {% endif %}
+
+    <a class="uk-icon-button uk-margin-small-right" href="{% url 'nueva-seccion' %}" uk-icon="icon: plus"></a>
+    <dl class="uk-description-list uk-description-list-divider">
+      {% for seccion in secciones.all %}
+        <dt>{{ seccion.titulo }}</dt>
+        <dd>
+          Nombre de configuración: {{ seccion.slug }} <br/>
+          Fecha de creación: {{ seccion.fecha_creacion }} <br/>
+          <a href="{% url 'editar-seccion' seccion.slug %}" class="uk-text-primary" uk-icon="icon: pencil"></a>
+          <a href="#" class="uk-text-danger" uk-icon="icon: trash" uk-toggle="target: #modal-{{ seccion.slug }}"></a>
+        </dd>
+    {% endfor %}
+    </dl>
+  </div>
+  
+  {% for seccion in secciones.all %}
+      <div id="modal-{{ seccion.slug }}" class="uk-flex-top" uk-modal>
+        <div class="uk-modal-dialog uk-modal-body uk-margin-auto-vertical">
+          <h2 class="uk-modal-title">Confirmación</h2>
+          <p>¿Eliminar sección '{{ seccion.titulo }}' permanentemente?</p>
+          <p class="uk-text-right">
+            <form action="{% url 'eliminar-seccion' seccion.slug %}" method="POST">
+              {% csrf_token %}
+              <button class="uk-button uk-button-default uk-modal-close" type="button">Cancelar</button>
+              <input class="uk-button uk-button-danger" type="submit" value="Eliminar"/>
+            </form>
+          </p>
+        </div>
+      </div>
+  {% endfor %}
+  
+{% endblock %}

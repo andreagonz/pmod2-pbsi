@@ -1,6 +1,6 @@
 {% extends 'base.html' %}
 
-{% block title %}Registro{% endblock %}
+{% block title %}Editar Sección{% endblock %}
 
 {% block head %}
   {% load staticfiles %}
@@ -9,10 +9,10 @@
 {% block contenido %}
   <div class="uk-container uk-container-small">
     <form class="uk-form-horizontal uk-margin-large" action="" method="post">
-      <h1 class="uk-heading-divider">Registro de usuarios</h1>
+      <h1 class="uk-heading-divider">Editar sección</h1>  
       {% csrf_token %}
       {% include 'form.html' with form=form %}
-      <input type="submit" class="uk-button uk-button-default" value="Crear usuario" />
+      <input type="submit" class="uk-button uk-button-default" value="Aceptar" />
     </form>
   </div>
 {% endblock %}

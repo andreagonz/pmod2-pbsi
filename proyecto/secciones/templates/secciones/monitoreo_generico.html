@@ -1,0 +1,33 @@
+{% extends 'base.html' %}
+
+{% block title %}{{ seccion.titulo }}{% endblock %}
+
+{% block head %}
+  {% load staticfiles %}
+{% endblock %}
+
+{% block contenido %}
+  {% if hubo_error %}    
+    <div class="uk-alert-danger" uk-alert>
+      <a class="uk-alert-close" uk-close></a>
+      <p>No se pudo leer el archivo de configuración o aun no se definen bitácoras para esta sección.</p>
+    </div>
+  {% else %}
+    <div class="uk-container uk-container-large">
+      <h1 class="uk-heading">{{ seccion.titulo }}</h1>
+      <ul uk-tab>
+        {% for nombre, contenido in archivos %}
+          <li><a href="#">{{ nombre }}</a></li> 
+        {% endfor %}
+      </ul>
+      <ul class="uk-switcher uk-margin">
+        {% for nombre, contenido in archivos %}
+          <li>
+            <pre>{{ contenido }}</pre>
+          </li>
+        {% endfor %}
+      </ul>
+    </div>
+  {% endif %}
+
+{% endblock %}

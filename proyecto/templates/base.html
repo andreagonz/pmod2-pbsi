@@ -2,11 +2,81 @@
 <html lang="es-MX">
   <head>
     <title>{% block title %}{% endblock %}</title>
-    {% load staticfiles %}
+    {% load static %}
+    {% load filtros %}
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="{% static 'css/uikit.min.css' %}" />
+    <link rel="stylesheet" href="{% static 'css/base.css' %}" />
+    
+    <script src="{% static 'js/uikit.min.js' %}"></script>
+    <script src="{% static 'js/uikit-icons.min.js' %}"></script>
+    
+    {% block head %}{% endblock %}
   </head>
   <body>
-    <a href="{% url 'editar-datos' %}">Editar datos</a>
-    <a href="{% url 'usuarios' %}">Administrar usuarios</a>
+
+    <nav class="uk-navbar uk-navbar-container uk-margin">
+      <div class="uk-navbar-left">
+        <a class="uk-navbar-toggle" uk-navbar-toggle-icon type="button" uk-toggle="target: #offcanvas-nav"></a>
+      </div>
+
+      <div class="uk-navbar-right">
+
+        <ul class="uk-navbar-nav">
+          <li><a class="mdl-navigation__link" href="{% url 'editar-datos' %}">Editar datos</a></li>
+          <li><a class="mdl-navigation__link" href="{% url 'usuarios' %}">Administrar usuarios</a></li>
+          <li><a class="mdl-navigation__link" href="{% url 'administrar-secciones' %}">Administrar secciones</a></li>
+          <li>
+            <a class="mdl-navigation__link" href="{% url 'logout' %}" data-uk-tooltip title="Cerrar sesión" uk-icon="icon: sign-out"></a>
+          </li>
+          <!--li>
+            <a href="#">Parent</a>
+              <div class="uk-navbar-dropdown">
+                <ul class="uk-nav uk-navbar-dropdown-nav">
+                  <li class="uk-active"><a href="#">Active</a></li>
+                  <li><a href="#">Item</a></li>
+                  <li><a href="#">Item</a></li>
+                </ul>
+              </div>
+            </li-->
+            <a href="{% url 'index' %}">
+              <img class="logo" src="/media/logo.png" alt="Logo UNAM-CERT" />
+            </a>
+        </ul>
+
+    </div>
+    </nav>
+    
+    <div class="uk-offcanvas-content">
+
+      <div id="offcanvas-nav" uk-offcanvas="overlay: true">
+        <div class="uk-offcanvas-bar">
+
+          <ul class="uk-nav uk-nav-default">
+            <li class="uk-active"><a href="{% url 'index' %}">DASHBOARD</a></li>
+            <li class="uk-nav-divider"></li>
+            <li class="uk-nav-header">Secciones</li>
+            <li class="uk-nav-divider"></li>
+            <li><a href="{% url 'monitoreo-usuarios' %}"><span class="uk-margin-small-right" uk-icon="icon: users"></span> Monitoreo de usuarios</a></li>
+            <li><a href="{% url 'monitoreo-procesos' %}"><span class="uk-margin-small-right" uk-icon="icon: refresh"></span> Monitoreo de procesos</a></li>
+            <li><a href="{% url 'monitoreo-red' %}"><span class="uk-margin-small-right" uk-icon="icon: social"></span> Monitoreo de red</a></li>
+            <li><a href="{% url 'monitoreo-autenticacion' %}"><span class="uk-margin-small-right" uk-icon="icon: lock"></span> Monitoreo de autenticación</a></li>
+            <li><a href="{% url 'monitoreo-almacenamiento' %}"><span class="uk-margin-small-right" uk-icon="icon: database"></span> Monitoreo de almacenamiento</a></li>
+            <li><a href="{% url 'monitoreo-archivos' %}"><span class="uk-margin-small-right" uk-icon="icon: folder"></span> Monitoreo de archivos y sockets</a></li>
+            <li><a href="{% url 'monitoreo-web' %}"><span class="uk-margin-small-right" uk-icon="icon: world"></span> Monitoreo de servidor web</a></li>
+            <li class="uk-nav-header">Secciones personalizadas</li>
+            <li class="uk-nav-divider"></li>
+            {% lista_secciones as secciones %}
+            {% for seccion in secciones %}
+              <li><a href="{% url 'monitoreo-generico' seccion.slug %}"><span class="uk-margin-small-right" uk-icon="icon: thumbnails"></span> {{ seccion.titulo }}</a></li>
+            {% endfor %}
+          </ul>          
+        </div>
+      </div>
+
+    </div>       
+    
     {% block contenido %}
     {% endblock %}
 

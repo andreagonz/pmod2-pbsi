@@ -8,27 +8,48 @@
 
 {% block contenido %}
   
-  {% if messages %}
-    <ul class="messages">
-      {% for message in messages %}
-        <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
-      {% endfor %}
-    </ul>
-  {% endif %}
+  <div class="uk-container uk-container-small">      
+    <h1 class="uk-heading-divider">Usuarios</h1>
+    
+    {% if messages %}
+      <ul class="messages">
+        {% for message in messages %}
+          <div class="uk-alert-success" uk-alert>
+            <a class="uk-alert-close" uk-close></a>
+            <p>{{ message }}</p>
+          </div>
+        {% endfor %}
+      </ul>
+    {% endif %}
 
-  <a href="{% url 'registro' %}">Agregar usuario</a>
+    <a class="uk-icon-button uk-margin-small-right" href="{% url 'registro' %}" uk-icon="icon: plus"></a>
+    <dl class="uk-description-list uk-description-list-divider">
+      {% for usuario in usuarios.all %}
+        <dt>{{ usuario.username }}</dt>
+        <dd>
+          Nombre: {{ usuario.first_name }} {{ usuario.last_name }}<br/>
+          Correo: {{ usuario.email }}<br/>
+          Fecha de registro: {{ usuario.date_joined }}<br/>
+          Último inicio de sesión: {{ usuario.last_login }}<br/>
+          <a href="#" class="uk-text-danger" uk-icon="icon: trash" uk-toggle="target: #modal-{{ usuario.username }}"></a>
+        </dd>
+    {% endfor %}
+    </dl>
+  </div>
+  
   {% for usuario in usuarios.all %}
-    
-    {{ usuario.username }}
-    {{ usuario.first_name }}
-    {{ usuario.last_name }}
-    
-    <a href="{% url 'usuario' usuario.pk %}">Ver datos</a>
-    
-    <form action="{% url 'eliminar-usuario' pk=usuario.pk %}" method="POST">
-      {% csrf_token %}
-      <input type="submit" value="Eliminar"/>
-    </form>
-    
+      <div id="modal-{{ usuario.username }}" class="uk-flex-top" uk-modal>
+        <div class="uk-modal-dialog uk-modal-body uk-margin-auto-vertical">
+          <h2 class="uk-modal-title">Confirmación</h2>
+          <p>¿Eliminar usuario '{{ usuario.username }}' permanentemente?</p>
+          <p class="uk-text-right">
+            <form action="{% url 'eliminar-usuario' pk=usuario.pk %}" method="POST">
+              {% csrf_token %}
+              <button class="uk-button uk-button-default uk-modal-close" type="button">Cancelar</button>
+              <input class="uk-button uk-button-danger" type="submit" value="Eliminar"/>
+            </form>
+          </p>
+        </div>
+      </div>
   {% endfor %}
 {% endblock %}

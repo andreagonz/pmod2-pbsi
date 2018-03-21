@@ -1,0 +1,13 @@
+{% extends "base.html" %}
+
+{% block title %}Monitoreo de red{% endblock %}
+
+{% block contenido %}
+  <div class="uk-container uk-container-small">
+    <h1 class="uk-heading-divider">Monitoreo de red</h1>
+    <pre>{{ interfaces }}</pre>
+    <pre>{{ puertos }}</pre>
+    <pre>{{ conexiones_establecidas }}</pre>
+    <pre>{{ estadisticas }}</pre>
+  </div>
+{% endblock %}

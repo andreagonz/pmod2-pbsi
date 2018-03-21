@@ -1,0 +1,13 @@
+{% extends "base.html" %}
+
+{% block title %}Monitoreo de usuarios{% endblock %}
+
+{% block contenido %}
+  <div class="uk-container uk-container-small">
+    <h1 class="uk-heading-divider">Monitoreo de usuarios</h1>
+    <div class="uk-column-1-2@m">
+      <pre>{{ usuarios_grupos }}</pre>
+      <pre>{{ usuarios_activos }}</pre>
+    </div>
+  </div>
+{% endblock %}

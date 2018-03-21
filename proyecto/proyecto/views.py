@@ -8,10 +8,18 @@ from django.views.generic.edit import DeletionMixin, UpdateView
 from django.views.generic import CreateView, ListView, DetailView, DeleteView
 from django.contrib.messages.views import SuccessMessageMixin
 from django.contrib import messages
+from django.conf import settings
+import subprocess as sp
+
+def dashboard():
+    p = sp.Popen("%s --dashboard" % settings.SCRIPT_SECCIONES, shell=True, stdout=sp.PIPE)
+    output = p.stdout.read()
+    return output.decode('utf-8')
 
 @login_required(login_url=reverse_lazy('login'))
 def index(request):
-    return render(request, 'index.html')
+    context = {'salida' : dashboard()}
+    return render(request, 'index.html', context)
 
 class RegistroUsuario(LoginRequiredMixin, CreateView):
 
@@ -26,12 +34,6 @@ class ListarUsuarios(LoginRequiredMixin, ListView):
     context_object_name = 'usuarios'
     template_name = 'registration/usuarios.html'
 
-class DetallesUsuario(LoginRequiredMixin, DetailView):
-
-    model = User
-    template_name = 'registration/usuario.html'
-    context_object_name = 'usuario'
-
 class EditarUsuario(LoginRequiredMixin, UpdateView):
 
     model = User
@@ -39,7 +41,7 @@ class EditarUsuario(LoginRequiredMixin, UpdateView):
     template_name = 'registration/editar_usuario.html'
 
     def get_success_url(self, **kwargs):
-        return reverse_lazy('usuario', kwargs={'pk': self.request.user.pk})
+        return reverse_lazy('usuarios')
 
     def get_object(self,queryset=None):
         return self.request.user

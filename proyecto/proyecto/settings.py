@@ -26,12 +26,13 @@ SECRET_KEY = 'j=9i4ooe3*rx63u(4b^e99+=tt*)$y4_++4%n$&8j_tu#15nak'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['*']
 
 
 # Application definition
 
 INSTALLED_APPS = [
+    'secciones',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -64,6 +65,9 @@ TEMPLATES = [
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
             ],
+            'libraries': {
+                'filtros': 'templatetags.filtros',
+            },
         },
     },
 ]
@@ -124,3 +128,19 @@ STATIC_URL = '/static/'
 LOGIN_URL= reverse_lazy('login')
 
 LOGIN_REDIRECT_URL = reverse_lazy('index')
+
+###
+
+STATICFILES_DIRS = (
+    os.path.join(BASE_DIR, "static"),
+)
+
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+
+MEDIA_URL = '/media/'
+
+###########
+
+ARCHIVO_CONFIGURACION = os.path.join(BASE_DIR, "conf/archivo.conf")
+
+SCRIPT_SECCIONES = os.path.join(BASE_DIR, "conf/script.sh")
