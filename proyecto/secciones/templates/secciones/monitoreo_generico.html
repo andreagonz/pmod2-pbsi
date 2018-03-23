@@ -15,11 +15,17 @@
   {% else %}
     
     <div class="uk-container uk-container-large">
-      <h1 class="uk-heading">{{ seccion.titulo }}</h1>
+      <h1 class="uk-heading">{{ seccion.titulo }}</h1>      
+      
+      <dl class="uk-description-list">
+          <dt>Bitácoras</dt>
+          <dd>
+            {% for nombre, archivo in archivos %}
+              <a href="{% url 'bitacora-generica' seccion=seccion.slug bitacora=nombre %}">{{ archivo }}</a><br/>
+            {% endfor %}
+          </dd>
 
-      {% for nombre, archivo in archivos %}
-        <a href="{% url 'bitacora-generica' seccion=seccion.slug bitacora=nombre %}">{{ archivo }}</a>
-      {% endfor %}
+        </dl>
         
     </div>
   {% endif %}

@@ -5,13 +5,24 @@
 {% block contenido %}
   <div class="uk-container uk-container-large">
     <h1 class="uk-heading-divider">Monitoreo de procesos</h1>
-    <form action="{% url 'monitoreo-procesos' %}"  method="get" >
-      <label>Búsqueda textual</label>
-      <input type="text" name="q">
-      <label>Búsqueda por expresión regular</label>
-      <input type="text" name="qr">
-      <input type="submit" value="Filtrar"/>
-    </form>
+    <button href="#toggle-animation" class="uk-button uk-button-primary uk-button-small" type="button" uk-toggle="target: #toggle-animation; animation: uk-animation-fade">Filtrar</button>
+      <div id="toggle-animation" class="uk-card uk-card-default uk-card-body uk-margin-small" aria-hidden="true" hidden="">
+        <form action=""  method="get" class="uk-form-horizontal uk-margin-large">
+          <div class="uk-margin">
+            <label class="uk-form-label" for="form-q">Búsqueda textual</label>
+            <div class="uk-form-controls">
+              <input class="uk-input" id="form-q" type="text" name="q">
+            </div>
+          </div>
+          <div class="uk-margin">
+            <label class="uk-form-label" for="form-qr">Búsqueda por expresión regular</label>
+            <div class="uk-form-controls">
+              <input class="uk-input" id="form-qr" type="text" name="qr">
+            </div>
+          </div>
+          <input class="uk-button uk-button-default" type="submit" value="Aceptar"/>
+        </form>
+      </div>
     <pre class="uk-scrollable-text contenedor-texto">{% for linea in salida %}{{ linea }}{% endfor %}</pre>
   </div>
 {% endblock %}

@@ -5,7 +5,7 @@
 {% block contenido %}
   <div class="uk-container uk-container-large">
     <h1 class="uk-heading-divider">Monitoreo del servidor web</h1>
-    <a href="{% url 'graficas' %}">Gráficas y estadísticas</a>
+    <a class="uk-button uk-button-primary" href="{% url 'graficas' %}">Gráficas y estadísticas</a>
     <ul uk-tab>        
       <li><a href="#">Módulos y virtualhosts</a></li>
       <li><a href="#">Bitácoras</a></li>
@@ -18,22 +18,37 @@
         </div>
       </li>
       <li>
-        Bitácoras
-        <a href="{% url 'bitacora-generica' seccion='web' bitacora='syslog' %}">Syslog</a>
-        <a href="{% url 'bitacora-generica' seccion='web' bitacora='messages' %}">Messages</a>
-        <a href="{% url 'bitacora-generica' seccion='web' bitacora='postgres' %}">PostgreSQL</a>
-        <a href="{% url 'bitacora-generica' seccion='web' bitacora='mysql' %}">MySQL</a>
-        Apache:
-        Mod Security:
-        <a href="{% url 'bitacora-generica' seccion='web' bitacora='mod_sec' %}">Mod Security</a>
-        AccessLogs:
-        {% for a in accesslogs %}
-          <a href="{% url 'access-log' posicion=forloop.counter %}">{{ a }}</a>
-        {% endfor %}
-        ErrorLogs:
-        {% for a in errorlogs %}
-          <a href="{% url 'error-log' posicion=forloop.counter %}">{{ a }}</a>
-        {% endfor %}
+
+        <dl class="uk-description-list">
+          <dt>Acceso de Apache</dt>
+          <dd>
+            {% for a in accesslogs %}
+              <a href="{% url 'access-log' posicion=forloop.counter %}">{{ a }}</a><br/>
+            {% endfor %}
+          </dd>
+          
+          <dt>Error de Apache</dt>
+          <dd>
+            {% for a in errorlogs %}
+              <a href="{% url 'error-log' posicion=forloop.counter %}">{{ a }}</a><br/>
+            {% endfor %}
+          </dd>
+          
+          <dt>Apache Mod Security</dt>
+          <dd>
+            <a href="{% url 'bitacora-generica' seccion='web' bitacora='mod_sec' %}">Mod Security</a>
+          </dd>
+          
+          <dt>Otras</dt>
+          <dd>
+            <a href="{% url 'bitacora-generica' seccion='web' bitacora='syslog' %}">Syslog</a><br/>
+            <a href="{% url 'bitacora-generica' seccion='web' bitacora='messages' %}">Messages</a><br/>
+            <a href="{% url 'bitacora-generica' seccion='web' bitacora='postgres' %}">PostgreSQL</a><br/>
+            <a href="{% url 'bitacora-generica' seccion='web' bitacora='mysql' %}">MySQL</a>
+          </dd>
+
+        </dl>
+        
       </li>
     </ul>
   </div>

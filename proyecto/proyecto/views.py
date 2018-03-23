@@ -12,12 +12,18 @@ from django.conf import settings
 import subprocess as sp
 
 def ejecuta(bandera):
+    """
+    Ejecuta el script de la aplicación con la bandera indicada y regresa la salida.
+    """
     p = sp.Popen("%s %s" % (settings.SCRIPT_SECCIONES, bandera), shell=True, stdout=sp.PIPE)
     output = p.stdout.read()
     return output.decode('utf-8')
 
 @login_required(login_url=reverse_lazy('login'))
 def index(request):
+    """
+    Vista para la página de inicio (dashboard).
+    """
     context = {
         'datos' : ejecuta("--datos"),
         'cron' : ejecuta("--cron")
@@ -25,20 +31,27 @@ def index(request):
     return render(request, 'index.html', context)
 
 class RegistroUsuario(LoginRequiredMixin, CreateView):
-
+    """
+    Clase que permite registrar un nuevo usuario.
+    """
+    
     model = User
     form_class = RegistroUsuarioForm
     template_name = 'registration/registro.html'
     success_url = reverse_lazy('usuarios')
 
 class ListarUsuarios(LoginRequiredMixin, ListView):
-
+    """
+    Clase que permite listar los usuarios en la base de datos.
+    """
     model = User
     context_object_name = 'usuarios'
     template_name = 'registration/usuarios.html'
 
 class EditarUsuario(LoginRequiredMixin, UpdateView):
-
+    """
+    Clase que permite editar un usuario.
+    """
     model = User
     fields = ['username', 'first_name', 'last_name', 'email']
     template_name = 'registration/editar_usuario.html'
@@ -50,7 +63,9 @@ class EditarUsuario(LoginRequiredMixin, UpdateView):
         return self.request.user
     
 class EliminarUsuario(LoginRequiredMixin, SuccessMessageMixin, DeleteView):
-    
+    """
+    Clase que pemrite eliminar un usuario
+    """
     model = User
     success_url = reverse_lazy('usuarios')
     success_message = 'Usuario eliminado'

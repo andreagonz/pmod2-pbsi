@@ -1,6 +1,6 @@
 #!/bin/bash
 
-OPTS=`getopt -o dCgbupircUIePmxfzMv:EA --long datos,cron,usuario-grupos,usuarios-bloqueados,usuarios-activos,procesos,interfaces,puertos,conexiones-establecidas,conexiones-udp,iptables,estadisticas,particiones,memoria,cpu,archivos-sockets,gzip:,vhosts,mods,apache-errorlog,apache-accesslog -- "$@"`
+OPTS=`getopt -o dCgbupircUIePmxfzMv:EAl:X: --long datos,cron,usuario-grupos,usuarios-bloqueados,usuarios-activos,procesos,interfaces,puertos,conexiones-establecidas,conexiones-udp,iptables,estadisticas,particiones,memoria,cpu,archivos-sockets,gzip:,vhosts,mods,apache-errorlog,apache-accesslog,lee-archivo:,existe: -- "$@"`
 eval set -- "$OPTS"
 
 if [ $? != 0 ] ; then echo "Error" >&2 ; exit 1 ; fi
@@ -113,7 +113,7 @@ while true; do
             shift ;;
         -z | --gzip)
             archivo=`sed 's/\([^[:alnum:]/._-]\)/\\\1/g' <<< "$2"`
-            sudo gzip -cd $archivo | tac
+            sudo gzip -cd "$archivo" | tac
             shift
             ;;
         -M | --mods)
@@ -158,7 +158,21 @@ while true; do
                 fi
             done | sort | uniq
             shift
-            ;;        
+            ;;
+        -l | --lee-archivo)
+            archivo=`sed 's/\([^[:alnum:]/._-]\)/\\\1/g' <<< "$2"`
+            if sudo [ -f $archivo ]; then
+               sudo tac "$2"
+            fi
+            shift
+            ;;
+        -X | --existe)            
+            archivo=`sed 's/\([^[:alnum:]/._-]\)/\\\1/g' <<< "$2"`
+            if sudo [ -f $archivo ]; then
+               echo true
+            fi
+            shift
+            ;;
         -- ) shift; break ;;
         * ) break ;;
     esac
