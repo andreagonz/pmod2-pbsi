@@ -34,7 +34,7 @@
         </div>
       {% endif %}
 
-      <form method="post" action="{% url 'login' %}">
+      <form method="post" action="{% url 'login' %}" autocomplete="off">
         {% csrf_token %}
 
         <div class="uk-margin">

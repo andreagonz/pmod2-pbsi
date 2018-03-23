@@ -11,14 +11,17 @@ from django.contrib import messages
 from django.conf import settings
 import subprocess as sp
 
-def dashboard():
-    p = sp.Popen("%s --dashboard" % settings.SCRIPT_SECCIONES, shell=True, stdout=sp.PIPE)
+def ejecuta(bandera):
+    p = sp.Popen("%s %s" % (settings.SCRIPT_SECCIONES, bandera), shell=True, stdout=sp.PIPE)
     output = p.stdout.read()
     return output.decode('utf-8')
 
 @login_required(login_url=reverse_lazy('login'))
 def index(request):
-    context = {'salida' : dashboard()}
+    context = {
+        'datos' : ejecuta("--datos"),
+        'cron' : ejecuta("--cron")
+    }
     return render(request, 'index.html', context)
 
 class RegistroUsuario(LoginRequiredMixin, CreateView):

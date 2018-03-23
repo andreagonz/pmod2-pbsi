@@ -3,11 +3,31 @@
 {% block title %}Monitoreo de red{% endblock %}
 
 {% block contenido %}
-  <div class="uk-container uk-container-small">
+  <div class="uk-container uk-container-medium">
     <h1 class="uk-heading-divider">Monitoreo de red</h1>
-    <pre>{{ interfaces }}</pre>
-    <pre>{{ puertos }}</pre>
-    <pre>{{ conexiones_establecidas }}</pre>
-    <pre>{{ estadisticas }}</pre>
+    <ul uk-tab>   
+      <li><a href="#">Interfaces y puertos</a></li>
+      <li><a href="#">Conexiones</a></li>
+      <li><a href="#">Iptables</a></li>
+      <li><a href="#">Estadísticas</a></li>
+    </ul>
+    <ul class="uk-switcher uk-margin">      
+      <li>
+        <pre>{% for linea in interfaces %}{{ linea }}{% endfor %}</pre>
+        <pre>{% for linea in puertos %}{{ linea }}{% endfor %}</pre>
+      </li>
+      <li>
+        <pre>{% for linea in conexiones_establecidas %}{{ linea }}{% endfor %}</pre>
+        <pre>{% for linea in conexiones_udp %}{{ linea }}{% endfor %}</pre>
+      </li>
+      <li>
+        <pre class="uk-scrollable-text contenedor-texto">{% for linea in iptables %}{{ linea }}{% endfor %}</pre>
+      </li>
+      <li>
+        <pre class="uk-scrollable-text contenedor-texto">{% for linea in estadisticas %}{{ linea }}{% endfor %}</pre>
+      </li>
+    </ul>
+
+    
   </div>
 {% endblock %}

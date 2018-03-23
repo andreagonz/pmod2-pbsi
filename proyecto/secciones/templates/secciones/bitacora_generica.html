@@ -1,0 +1,27 @@
+{% extends "base.html" %}
+
+{% block title %}Bitácora {{ nombre }}{% endblock %}
+
+{% block contenido %}
+    {% if hubo_error %} 
+    <div class="uk-alert-danger" uk-alert>
+      <a class="uk-alert-close" uk-close></a>
+      <p>No se pudo leer el archivo de configuración o la bitácora no está definida.</p>
+    </div>
+  {% else %}
+    <div class="uk-container uk-container-large">
+      <h1 class="uk-heading-divider">Bitácora {{ nombre }}</h1>    
+      Ubicación: {{ ubicacion }}
+      <form action=""  method="get" >
+        <label>Número máximo de líneas</label>
+        <input type="text" name="max">
+        <label>Búsqueda textual</label>
+        <input type="text" name="q">
+        <label>Búsqueda por expresión regular</label>
+        <input type="text" name="qr">
+        <input type="submit" value="Filtrar"/>
+      </form>
+      <pre class="uk-scrollable-text contenedor-texto">{% for linea in archivo %}{{ linea }}{% endfor %}</pre>
+    </div>
+  {% endif %}
+{% endblock %}

@@ -3,8 +3,38 @@
 {% block title %}Monitoreo web{% endblock %}
 
 {% block contenido %}
-  <div class="uk-container uk-container-small">
+  <div class="uk-container uk-container-large">
     <h1 class="uk-heading-divider">Monitoreo del servidor web</h1>
-    <pre>{{ salida }}</pre>
+    <a href="{% url 'graficas' %}">Gráficas y estadísticas</a>
+    <ul uk-tab>        
+      <li><a href="#">Módulos y virtualhosts</a></li>
+      <li><a href="#">Bitácoras</a></li>
+    </ul>
+    <ul class="uk-switcher uk-margin">      
+      <li>
+        <div class="uk-column-1-2@m">
+          <pre class="uk-scrollable-text contenedor-texto">{% for linea in mods %}{{ linea }}{% endfor %}</pre>
+          <pre class="uk-scrollable-text contenedor-texto">{% for linea in vhosts %}{{ linea }}{% endfor %}</pre>
+        </div>
+      </li>
+      <li>
+        Bitácoras
+        <a href="{% url 'bitacora-generica' seccion='web' bitacora='syslog' %}">Syslog</a>
+        <a href="{% url 'bitacora-generica' seccion='web' bitacora='messages' %}">Messages</a>
+        <a href="{% url 'bitacora-generica' seccion='web' bitacora='postgres' %}">PostgreSQL</a>
+        <a href="{% url 'bitacora-generica' seccion='web' bitacora='mysql' %}">MySQL</a>
+        Apache:
+        Mod Security:
+        <a href="{% url 'bitacora-generica' seccion='web' bitacora='mod_sec' %}">Mod Security</a>
+        AccessLogs:
+        {% for a in accesslogs %}
+          <a href="{% url 'access-log' posicion=forloop.counter %}">{{ a }}</a>
+        {% endfor %}
+        ErrorLogs:
+        {% for a in errorlogs %}
+          <a href="{% url 'error-log' posicion=forloop.counter %}">{{ a }}</a>
+        {% endfor %}
+      </li>
+    </ul>
   </div>
 {% endblock %}

@@ -15,3 +15,7 @@
 .campos-inicio {
     display : block;
 }
+
+.contenedor-texto {
+    max-height : 700px
+}

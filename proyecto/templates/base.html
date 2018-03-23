@@ -6,6 +6,8 @@
     {% load filtros %}
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="icon" href="/media/icon.ico" type="image/x-icon" />
+    <link rel="shortcut icon" href="/media/icon.ico" type="image/x-icon" />
     <link rel="stylesheet" href="{% static 'css/uikit.min.css' %}" />
     <link rel="stylesheet" href="{% static 'css/base.css' %}" />
     
@@ -61,7 +63,7 @@
             <li><a href="{% url 'monitoreo-usuarios' %}"><span class="uk-margin-small-right" uk-icon="icon: users"></span> Monitoreo de usuarios</a></li>
             <li><a href="{% url 'monitoreo-procesos' %}"><span class="uk-margin-small-right" uk-icon="icon: refresh"></span> Monitoreo de procesos</a></li>
             <li><a href="{% url 'monitoreo-red' %}"><span class="uk-margin-small-right" uk-icon="icon: social"></span> Monitoreo de red</a></li>
-            <li><a href="{% url 'monitoreo-autenticacion' %}"><span class="uk-margin-small-right" uk-icon="icon: lock"></span> Monitoreo de autenticación</a></li>
+            <li><a href="{% url 'bitacora-generica' seccion='autenticacion' bitacora='auth' %}"><span class="uk-margin-small-right" uk-icon="icon: lock"></span> Monitoreo de autenticación</a></li>
             <li><a href="{% url 'monitoreo-almacenamiento' %}"><span class="uk-margin-small-right" uk-icon="icon: database"></span> Monitoreo de almacenamiento</a></li>
             <li><a href="{% url 'monitoreo-archivos' %}"><span class="uk-margin-small-right" uk-icon="icon: folder"></span> Monitoreo de archivos y sockets</a></li>
             <li><a href="{% url 'monitoreo-web' %}"><span class="uk-margin-small-right" uk-icon="icon: world"></span> Monitoreo de servidor web</a></li>

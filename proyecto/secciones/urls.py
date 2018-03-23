@@ -9,9 +9,12 @@ urlpatterns = [
     path('usuarios', views.monitoreo_usuarios, name='monitoreo-usuarios'),
     path('procesos', views.monitoreo_procesos, name='monitoreo-procesos'),
     path('red', views.monitoreo_red, name='monitoreo-red'),
-    path('autenticacion', views.monitoreo_autenticacion, name='monitoreo-autenticacion'),
     path('almacenamiento', views.monitoreo_almacenamiento, name='monitoreo-almacenamiento'),
     path('archivos', views.monitoreo_archivos, name='monitoreo-archivos'),
     path('web', views.monitoreo_web, name='monitoreo-web'),
     path('<slug:slug>', views.MonitoreoGenerico.as_view(), name='monitoreo-generico'),
+    path('<slug:seccion>/bitacora/<slug:bitacora>', views.bitacora_generica, name='bitacora-generica'),
+    path('web/graficas', views.graficas, name='graficas'),
+    path('web/bitacora/errorlog/<int:posicion>', views.apache_errorlog, name='error-log'),
+    path('web/bitacora/accesslog/<int:posicion>', views.apache_accesslog, name='access-log')
 ]

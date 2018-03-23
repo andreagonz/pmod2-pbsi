@@ -11,3 +11,4 @@ class SeccionForm(ModelForm):
             'titulo' : _('Título'),
             'slug' : _('Nombre de configuración')
         }
+

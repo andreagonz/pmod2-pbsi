@@ -3,8 +3,17 @@
 {% block title %}Monitoreo de archivos y sockets{% endblock %}
 
 {% block contenido %}
-  <div class="uk-container uk-container-small">
+  <div class="uk-container uk-container-large">
     <h1 class="uk-heading-divider">Monitoreo de archivos y sockets</h1>
-    <pre>{{ salida }}</pre>
+    <form action="{% url 'monitoreo-archivos' %}"  method="get" >
+      <label>Número máximo de líneas</label>
+      <input type="text" name="max">
+      <label>Búsqueda textual</label>
+      <input type="text" name="q">
+      <label>Búsqueda por expresión regular</label>
+      <input type="text" name="qr">
+      <input type="submit" value="Filtrar"/>
+    </form>
+    <pre class="uk-scrollable-text contenedor-texto">{% for linea in salida %}{{ linea }}{% endfor %}</pre>
   </div>
 {% endblock %}

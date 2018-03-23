@@ -2,12 +2,13 @@ from django.contrib import admin
 from django.urls import path, include
 from .views import index, RegistroUsuario, ListarUsuarios, EditarUsuario, EliminarUsuario
 from django.contrib.auth import views as auth_views
-
+from django.views.generic import RedirectView
 from django.conf import settings
 from django.conf.urls.static import static
 
 urlpatterns = [
     path('', index, name='index'),
+    path('favicon.ico', RedirectView.as_view(url='/media/favicon.ico')),
     path('login/', auth_views.LoginView.as_view(), name='login'),
     path('logout/', auth_views.logout_then_login, name='logout'),
     path('registro/', RegistroUsuario.as_view(), name='registro'),

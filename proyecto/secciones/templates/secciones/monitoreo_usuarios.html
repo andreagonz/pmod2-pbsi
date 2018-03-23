@@ -3,11 +3,13 @@
 {% block title %}Monitoreo de usuarios{% endblock %}
 
 {% block contenido %}
-  <div class="uk-container uk-container-small">
+  <div class="uk-container uk-container-large">
     <h1 class="uk-heading-divider">Monitoreo de usuarios</h1>
+    <pre class="uk-scrollable-text contenedor-texto">{% for linea in usuarios_activos %}{{ linea }}{% endfor %}</pre>
     <div class="uk-column-1-2@m">
-      <pre>{{ usuarios_grupos }}</pre>
-      <pre>{{ usuarios_activos }}</pre>
+      <pre class="uk-scrollable-text contenedor-texto">{% for linea in usuarios_grupos %}{{ linea }}{% endfor %}</pre>
+      <pre class="uk-scrollable-text contenedor-texto">{% for linea in usuarios_bloqueados %}{{ linea }}{% endfor %}</pre>
     </div>
+  
   </div>
 {% endblock %}

@@ -5,6 +5,8 @@
 {% block contenido %}
   <div class="uk-container uk-container-small">
     <h1 class="uk-heading-divider">Monitoreo de almacenamiento</h1>
-    <pre>{{ salida }}</pre>
+    <pre class="uk-scrollable-text contenedor-texto">{% for linea in particiones %}{{ linea }}{% endfor %}</pre>
+    <pre class="uk-scrollable-text contenedor-texto">{% for linea in memoria %}{{ linea }}{% endfor %}</pre>
+    <pre class="uk-scrollable-text contenedor-texto">{% for linea in cpu %}{{ linea }}{% endfor %}</pre>    
   </div>
 {% endblock %}
