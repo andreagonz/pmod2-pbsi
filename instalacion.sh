@@ -1,7 +1,7 @@
 #!/bin/bash
 
 
-OPTS=`getopt -o dv:g -- "$@"`
+OPTS=`getopt -o dv:g: -- "$@"`
 eval set -- "$OPTS"
 
 if [ $? != 0 ] ; then echo "Error" >&2 ; exit 1 ; fi
@@ -11,7 +11,7 @@ while true; do
         
         -d)
             sudo apt-get install python3-pip
-            sudo apt-get install net-tools sysstat libapache2-mod-wsgi-py3
+            sudo apt-get install net-tools sysstat libapache2-mod-wsgi-py3 apache2-dev
             sudo a2enmod wsgi
             sudo pip3 install virtualenv
             shift
@@ -28,6 +28,7 @@ while true; do
             ;;
         
         -g)
+            cd $2
             sudo apt-get install libncursesw5-dev
             wget https://github.com/maxmind/geoip-api-c/releases/download/v1.6.11/GeoIP-1.6.11.tar.gz
             tar -xzvf GeoIP-1.6.11.tar.gz

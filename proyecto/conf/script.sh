@@ -125,8 +125,8 @@ while true; do
             shift
             ;;
         -E | --apache-errorlog)
-            servroot=`apache2ctl -S | grep ServerRoot | cut -d' ' -f2 | tr -d '"'`
-            errorlog=`apache2ctl -S | grep ErrorLog | cut -d' ' -f3 | tr -d '"'`
+            servroot=`/usr/sbin/apache2ctl -S | grep ServerRoot | cut -d' ' -f2 | tr -d '"'`
+            errorlog=`/usr/sbin/apache2ctl -S | grep ErrorLog | cut -d' ' -f3 | tr -d '"'`
             source $servroot/envvars
             echo General,$errorlog
             sites=`egrep "[^#]*IncludeOptional.*\*\.conf" /etc/apache2/apache2.conf | sed -r 's|IncludeOptional[[:space:]]+(.+)/\*\.conf|\1|'`
@@ -150,7 +150,7 @@ while true; do
             shift
             ;;
         -A | --apache-accesslog)
-            servroot=`apachectl -S | grep ServerRoot | cut -d' ' -f2 | tr -d '"'`
+            servroot=`/usr/sbin/apache2ctl -S | grep ServerRoot | cut -d' ' -f2 | tr -d '"'`
             source $servroot/envvars            
             sites=`egrep "[^#]*IncludeOptional.*\*\.conf" /etc/apache2/apache2.conf | sed -r 's|IncludeOptional[[:space:]]+(.+)/\*\.conf|\1|'`
             echo General,$APACHE_LOG_DIR/access.log
@@ -175,14 +175,14 @@ while true; do
             ;;
         -l | --lee-archivo)
             archivo=`sed 's/\([^[:alnum:]/._-]\)/\\\1/g' <<< "$2"`
-            if sudo [ -f $archivo ]; then
+            if sudo test -f "$archivo"; then
                sudo tac "$2"
             fi
             shift
             ;;
         -X | --existe)            
             archivo=`sed 's/\([^[:alnum:]/._-]\)/\\\1/g' <<< "$2"`
-            if sudo [ -f $archivo ]; then
+            if sudo test -f "$archivo"; then
                echo true
             fi
             shift
