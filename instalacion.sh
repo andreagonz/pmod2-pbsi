@@ -42,6 +42,9 @@ while true; do
             ./configure --enable-utf8 --enable-geoip=legacy
             make
             sudo make install
+            sed -i "/#time-format %H:%M:%S/c time-format %H:%M:%S" /usr/local/etc/goaccess.conf
+            sed -i "/#date-format %d/%b/%Y/c date-format %d/%b/%Y" /usr/local/etc/goaccess.conf
+            sed -i '/#log-format %h %\^\[%d:%t %\^\] "%r" %s %b "%R" "%u"/c log-format %h %^[%d:%t %^] "%r" %s %b "%R" "%u"' /usr/local/etc/goaccess.conf
             shift
             ;;
         
