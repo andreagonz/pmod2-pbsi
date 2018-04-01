@@ -19,7 +19,7 @@
       </ul>
     {% endif %}
 
-    <a class="uk-icon-button uk-margin-small-right" href="{% url 'nueva-seccion' %}" uk-icon="icon: plus"></a>
+    <a class="uk-icon-button uk-margin-small-right uk-button-primary" href="{% url 'nueva-seccion' %}" uk-icon="icon: plus"></a>
     <dl class="uk-description-list uk-description-list-divider">
       {% for seccion in secciones.all %}
         <dt>{{ seccion.titulo }}</dt>

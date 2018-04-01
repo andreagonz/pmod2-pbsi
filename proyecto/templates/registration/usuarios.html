@@ -22,7 +22,7 @@
       </ul>
     {% endif %}
 
-    <a class="uk-icon-button uk-margin-small-right" href="{% url 'registro' %}" uk-icon="icon: plus"></a>
+    <a class="uk-icon-button uk-margin-small-right uk-button-primary" href="{% url 'registro' %}" uk-icon="icon: plus"></a>
     <dl class="uk-description-list uk-description-list-divider">
       {% for usuario in usuarios.all %}
         <dt>{{ usuario.username }}</dt>

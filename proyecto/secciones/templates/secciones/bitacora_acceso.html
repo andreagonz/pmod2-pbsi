@@ -12,40 +12,37 @@
     <div class="uk-container uk-container-large">
       <h1 class="uk-heading-divider">Bitácora de acceso de Apache</h1>
       Ubicación: {{ ubicacion }}&nbsp;
-      <button href="#toggle-animation" class="uk-button uk-button-primary uk-button-small" type="button" uk-toggle="target: #toggle-animation; animation: uk-animation-fade">Filtrar</button>
-      <div id="toggle-animation" class="uk-card uk-card-default uk-card-body uk-margin-small" aria-hidden="true" hidden="">
-      
-        <form action=""  method="get" class="uk-form-horizontal uk-margin-large">
-          
-          <div class="uk-margin">
-            <label class="uk-form-label" for="form-max">Número máximo de líneas</label>
-            <div class="uk-form-controls">
-              <input class="uk-input" id="form-max" type="text" name="max">
-            </div>
-          </div>
-          
-          <div class="uk-margin">
-            <label class="uk-form-label" for="form-q">Búsqueda textual</label>
-            <div class="uk-form-controls">
-              <input class="uk-input" id="form-q" type="text" name="q">
-            </div>
-          </div>
-          
-          <div class="uk-margin">
-            <label class="uk-form-label" for="form-qr">Búsqueda por expresión regular</label>
-            <div class="uk-form-controls">
-              <input class="uk-input" id="form-qr" type="text" name="qr">
-            </div>
-          </div>
 
-          <div class="uk-margin">
-            <label class="uk-form-label" for="form-f">Formato</label>
-            <div class="uk-form-controls">
-              <input class="uk-input" id="form-f" type="text" name="f">
-            </div>
-          </div>
-          <button class="uk-button uk-button-primary" type="button" uk-toggle="target: #toggle-hover; mode: hover">?</button>
-          <pre id="toggle-hover" aria-hidden="true" hidden="">Formato aceptado
+      <form action=""  method="get" class="uk-grid-small" uk-grid>
+
+        <div class="uk-width-1-6@l uk-width-1-2@s">
+          <label class="uk-form-label" for="form-max">Número máximo de líneas</label>
+          <input class="uk-input uk-form-small" id="form-max" type="text" name="max">
+        </div>
+
+        <div class="uk-width-1-4@l uk-width-1-2@s">
+          <label class="uk-form-label" for="form-q">Búsqueda textual</label>
+          <input class="uk-input uk-form-small" id="form-q" type="text" name="q">
+        </div>
+        
+        <div class="uk-width-1-4@l uk-width-1-2@s">
+          <label class="uk-form-label" for="form-qr">Búsqueda por expresión regular</label>
+          <input class="uk-input uk-form-small" id="form-qr" type="text" name="qr">
+        </div>          
+
+        
+        <div class="uk-width-1-6@l uk-width-1-2@s">
+          <label class="uk-form-label" for="form-f">Formato</label>
+          <input class="uk-input uk-form-small" id="form-f" type="text" name="f">
+        </div>                        
+        
+        <div class="uk-width-1-6@l">
+          <br/>
+          <button class="uk-button boton-info uk-button-small" type="button" uk-toggle="target: #toggle">?</button>
+          <input class="uk-button uk-button-primary uk-button-small" id="boton-filtrar" type="submit" value="Filtrar"/>
+        </div>
+      </form>
+      <pre id="toggle" aria-hidden="true" hidden="">Formato aceptado
 h - host
 l - identd
 u - userid
@@ -57,14 +54,8 @@ R - referer
 U - agente de usuario
 
 Ejemplo:
-r t s U h
-          </pre>
-          <input class="uk-button uk-button-default" type="submit" value="Aceptar"/>
-        </form>
-        
-      </div>
-
-      
+r t s U h</pre>
+            
       <pre class="uk-scrollable-text contenedor-texto">{% for linea in archivo %}{{ linea }}{% endfor %}</pre>
     </div>
   {% endif %}

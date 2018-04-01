@@ -10,32 +10,11 @@
     </div>
   {% else %}
     <div class="uk-container uk-container-large">
-      <h1 class="uk-heading-divider">Bitácora {{ nombre }}</h1>    
-      Ubicación: {{ ubicacion }}&nbsp;
-      <button href="#toggle-animation" class="uk-button uk-button-primary uk-button-small" type="button" uk-toggle="target: #toggle-animation; animation: uk-animation-fade">Filtrar</button>
-      <div id="toggle-animation" class="uk-card uk-card-default uk-card-body uk-margin-small" aria-hidden="true" hidden="">
-        <form action=""  method="get" class="uk-form-horizontal uk-margin-large">
-          <div class="uk-margin">
-            <label class="uk-form-label" for="form-max">Número máximo de líneas</label>
-            <div class="uk-form-controls">
-              <input class="uk-input" id="form-max" type="text" name="max">
-            </div>
-          </div>
-          <div class="uk-margin">
-            <label class="uk-form-label" for="form-q">Búsqueda textual</label>
-            <div class="uk-form-controls">
-              <input class="uk-input" id="form-q" type="text" name="q">
-            </div>
-          </div>
-          <div class="uk-margin">
-            <label class="uk-form-label" for="form-qr">Búsqueda por expresión regular</label>
-            <div class="uk-form-controls">
-              <input class="uk-input" id="form-qr" type="text" name="qr">
-            </div>
-          </div>
-          <input class="uk-button uk-button-default" type="submit" value="Aceptar"/>
-        </form>
-      </div>
+      <h1 class="uk-heading-divider">Bitácora {{ nombre }}</h1>
+      Ubicación: {{ ubicacion }}&nbsp;      
+
+      {% include 'secciones/form_filtrar.html' %}
+
       <pre class="uk-scrollable-text contenedor-texto">{% for linea in archivo %}{{ linea }}{% endfor %}</pre>
     </div>
   {% endif %}

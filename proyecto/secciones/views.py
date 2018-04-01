@@ -300,8 +300,8 @@ def monitoreo_web(request):
     context = {
         'vhosts' : ejecuta('--vhosts'),
         'mods' : ejecuta('--mods'),
-        'accesslogs' : ejecuta('--apache-accesslog'),
-        'errorlogs' : ejecuta('--apache-errorlog'),
+        'accesslogs' : [tuple(x.split(',')) for x in ejecuta('--apache-accesslog')],
+        'errorlogs' : [tuple(x.split(',')) for x in ejecuta('--apache-errorlog')],
         'hubo_error' : False
     }
     config = configparser.ConfigParser()
@@ -381,16 +381,17 @@ def apache_accesslog(request, posicion):
     m = request.GET.get('max')
     max_lineas = int_or_0(m) if m else 100
     formato = request.GET.get('f')
+    log = logs[i - 1].split(",")[1]
     if formato:
         formato = formato.replace(' ', '')
     archivo = None
     if formato and valida_formato(formato):
-        archivo = lee_rotaciones(logs[i - 1], max_lineas=max_lineas, filtros=filtros, formato=formato)
+        archivo = lee_rotaciones(log, max_lineas=max_lineas, filtros=filtros, formato=formato)
     else:
-        archivo = lee_rotaciones(logs[i - 1], max_lineas=max_lineas, filtros=filtros)
+        archivo = lee_rotaciones(log, max_lineas=max_lineas, filtros=filtros)
     context = {
         'archivo' : archivo,
-        'ubicacion' : logs[i - 1]
+        'ubicacion' : log
     }
     return render(request, 'secciones/bitacora_acceso.html', context)
 
@@ -405,13 +406,14 @@ def apache_errorlog(request, posicion):
     i = int_or_0(posicion)
     if i <= 0 or i > len(logs):
         raise Http404()
+    log = logs[i - 1].split(",")[1]
     filtros = obten_filtros(request)
     m = request.GET.get('max')
     max_lineas = int_or_0(m) if m else 100
     context = {
         'nombre' : 'de error de Apache',
-        'ubicacion' : logs[i - 1],
-        'archivo' : lee_rotaciones(logs[i - 1], max_lineas=max_lineas, filtros=filtros),
+        'ubicacion' : log,
+        'archivo' : lee_rotaciones(log, max_lineas=max_lineas, filtros=filtros),
         'hubo_error' : False
     }
     return render(request, 'secciones/bitacora_generica.html', context)
@@ -421,7 +423,7 @@ def graficas(request):
     """
     Muestra las gráficas y estadísticas generadas por goaccess.
     """
-    f = open(os.path.join(settings.BASE_DIR, "secciones/templates/secciones/graficas.html"))
+    f = open(os.path.join(settings.BASE_DIR, "secciones/templates/secciones/graficas.html"), 'r', encoding='utf-8')
     l = f.read()
     f.close()
     return HttpResponse(l)

@@ -6,6 +6,8 @@
     {% load filtros %}
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="icon" href="{% static 'favicon.ico' %}" type="image/x-icon" />
+    <link rel="shortcut icon" href="{% static 'favicon.ico' %}" type="image/x-icon" />
     <link rel="stylesheet" href="{% static 'css/uikit.min.css' %}" />
     <link rel="stylesheet" href="{% static 'css/base.css' %}" />
     
@@ -18,7 +20,7 @@
     
     <div class="uk-position-center uk-text-center" style="width:350px;">
       
-      <img src="/media/logo.png" class="logo-inicio" alt="Logo UNAM-CERT" />
+      <img src="{% static 'logo.png' %}" class="logo-inicio" alt="Logo UNAM-CERT" />
       
       {% if form.errors %}
         <div class="uk-alert-danger" uk-alert>

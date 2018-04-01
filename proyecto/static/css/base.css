@@ -19,3 +19,17 @@
 .contenedor-texto {
     max-height : 700px
 }
+
+.contenedor {
+    margin-bottom: 50px;
+}
+
+.boton-info {
+    background: #ffe36b;
+    border: 1px solid transparent;
+}
+
+
+.boton-info:hover {
+    background: #e3cd73;
+}

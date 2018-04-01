@@ -45,7 +45,7 @@ while true; do
             w -s
             shift ;;
         -p | --procesos)
-            ps -Ao pid,uid,uname,%cpu,%mem,cmd
+            sudo ps -Ao pid,uid,uname,%cpu,%mem,cmd
             shift ;;
         -i | --interfaces)
             echo -e "Interfaz IP/Máscara Gateway\n"
@@ -127,36 +127,50 @@ while true; do
         -E | --apache-errorlog)
             servroot=`apache2ctl -S | grep ServerRoot | cut -d' ' -f2 | tr -d '"'`
             errorlog=`apache2ctl -S | grep ErrorLog | cut -d' ' -f3 | tr -d '"'`
-            source $servroot/envvars            
-            ls -d $servroot/sites-enabled/* | while read linea; do
-                echo $errorlog
-                e=`grep ErrorLog $linea | egrep -v "[\s]*#.*"`
-                if [ ! -z "$e" ]; then
-                    e=$(echo $e | sed "s|\${APACHE_LOG_DIR}|$APACHE_LOG_DIR|g" | tr '\t' ' ' | tr -s ' ' | cut -d' ' -f2)
-                    if [[ $e == /* ]]; then
-                        echo $e
-                    else
-                        echo $servroot/$e
-                    fi                    
-                fi
-            done | sort | uniq
+            source $servroot/envvars
+            echo General,$errorlog
+            sites=`egrep "[^#]*IncludeOptional.*\*\.conf" /etc/apache2/apache2.conf | sed -r 's|IncludeOptional[[:space:]]+(.+)/\*\.conf|\1|'`
+            for x in $sites; do
+                if [[ $x != /* ]]; then
+                    x=$servroot/$x
+                fi                
+                ls -d $x/* | while read linea; do
+                    linea=`sed 's/\([^[:alnum:]/._-]\)/\\\1/g' <<< "$linea"`
+                    e=`grep "ErrorLog" "$linea" | egrep -v "[\s]*#.*"`
+                    if [ ! -z "$e" ]; then
+                        e=$(echo $e | sed "s|\${APACHE_LOG_DIR}|$APACHE_LOG_DIR|g" | tr '\t' ' ' | tr -s ' ' | cut -d' ' -f2)
+                        if [[ $e == /* ]]; then
+                            echo `basename "$linea"`,$e
+                        else
+                            echo `basename "$linea"`,$servroot/$e
+                        fi
+                    fi
+                done
+            done
             shift
             ;;
         -A | --apache-accesslog)
             servroot=`apachectl -S | grep ServerRoot | cut -d' ' -f2 | tr -d '"'`
-            source $servroot/envvars
-            ls -d $servroot/sites-enabled/* | while read linea; do
-                echo $APACHE_LOG_DIR/access.log
-                e=`grep "CustomLog" $linea | egrep -v "[\s]*#.*"`
-                if [ ! -z "$e" ]; then
-                    e=$(echo $e | sed "s|\${APACHE_LOG_DIR}|$APACHE_LOG_DIR|g" | tr '\t' ' ' | tr -s ' ' | cut -d' ' -f2)
-                    if [[ $e == /* ]]; then
-                        echo $e
-                    else
-                        echo $servroot/$e
-                    fi
+            source $servroot/envvars            
+            sites=`egrep "[^#]*IncludeOptional.*\*\.conf" /etc/apache2/apache2.conf | sed -r 's|IncludeOptional[[:space:]]+(.+)/\*\.conf|\1|'`
+            echo General,$APACHE_LOG_DIR/access.log
+            for x in $sites; do
+                if [[ $x != /* ]]; then
+                    x=$servroot/$x
                 fi
-            done | sort | uniq
+                ls -d $x/* | while read linea; do
+                    linea=`sed 's/\([^[:alnum:]/._-]\)/\\\1/g' <<< "$linea"`
+                    e=`grep "CustomLog" "$linea" | egrep -v "[\s]*#.*"`
+                    if [ ! -z "$e" ]; then
+                        e=$(echo $e | sed "s|\${APACHE_LOG_DIR}|$APACHE_LOG_DIR|g" | tr '\t' ' ' | tr -s ' ' | cut -d' ' -f2)
+                        if [[ $e == /* ]]; then
+                            echo `basename "$linea"`,$e
+                        else
+                            echo `basename "$linea"`,$servroot/$e
+                        fi
+                    fi
+                done
+            done
             shift
             ;;
         -l | --lee-archivo)

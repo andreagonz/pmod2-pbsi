@@ -8,7 +8,6 @@ from django.conf.urls.static import static
 
 urlpatterns = [
     path('', index, name='index'),
-    path('favicon.ico', RedirectView.as_view(url='/media/favicon.ico')),
     path('login/', auth_views.LoginView.as_view(), name='login'),
     path('logout/', auth_views.logout_then_login, name='logout'),
     path('registro/', RegistroUsuario.as_view(), name='registro'),
@@ -19,5 +18,3 @@ urlpatterns = [
     path('cambiar_contrasena/done/', auth_views.PasswordChangeDoneView.as_view(template_name='registration/password_change_done.html'), name='password_change_done'),
     path('secciones/', include('secciones.urls')),
 ]
-
-urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

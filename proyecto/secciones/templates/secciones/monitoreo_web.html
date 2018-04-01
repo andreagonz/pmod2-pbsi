@@ -22,15 +22,15 @@
         <dl class="uk-description-list">
           <dt>Acceso de Apache</dt>
           <dd>
-            {% for a in accesslogs %}
-              <a href="{% url 'access-log' posicion=forloop.counter %}">{{ a }}</a><br/>
+            {% for sitio, archivo in accesslogs %}
+              {{ sitio }}: <a href="{% url 'access-log' posicion=forloop.counter %}">{{ archivo }}</a><br/>
             {% endfor %}
           </dd>
           
           <dt>Error de Apache</dt>
           <dd>
-            {% for a in errorlogs %}
-              <a href="{% url 'error-log' posicion=forloop.counter %}">{{ a }}</a><br/>
+            {% for sitio, archivo in errorlogs %}
+              {{ sitio }}: <a href="{% url 'error-log' posicion=forloop.counter %}">{{ archivo }}</a><br/>
             {% endfor %}
           </dd>
           
